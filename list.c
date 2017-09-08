@@ -46,8 +46,7 @@ int get_value(List *list, int index)
 }   
 
 void insert_tail(List* list, Node* node) 
-{
-    Node** addr = list->addr;
+{    
     Node** new_addr = malloc((list->size + 1) * sizeof(Node*)); 
     Node *it = list->head;
     do 
@@ -64,10 +63,8 @@ void insert_tail(List* list, Node* node)
 }
 
 void insert_inside(List* list, Node* node, int index) 
-{
-    Node** addr = list->addr;
-    Node** new_addr = malloc((list->size + 1) * sizeof(Node*));    
-    
+{   
+    Node** new_addr = malloc((list->size + 1) * sizeof(Node*));        
     //Update element before inserted element
     Node *it1 = list->head;
     do 
@@ -115,6 +112,26 @@ void insert(List *list, int value, int index)
     {
         insert_inside(list, node, index);
     }
+}
+
+void delete_head()
+{
+    //TODO write logic here
+}
+
+void delete_inside()
+{
+    //TODO write logic here
+}
+
+void delete_tail()
+{
+    //TODO write logic here
+}
+
+void delete(List *list, int index)
+{   
+    //TODO write logic here
 }
 
 void print_list_values(List *list) 
