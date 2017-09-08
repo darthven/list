@@ -130,13 +130,12 @@ void delete_head(List *list)
             it->index--;
             list->addr[it->index] = it;
             it = it->next;
-        } while(it != NULL);      
-        list->size--;
+        } while(it != NULL);          
    } else
    {
-        list->head = list->tail = NULL;
-        list->size--;
+        list->head = list->tail = NULL;       
    } 
+   list->size--;
 }
 
 void delete_inside(List *list, int index)
@@ -161,13 +160,12 @@ void delete_tail(List *list)
     {       
         Node *it = list->tail->prev;  
         list->tail->prev->next = NULL;
-        list->tail = list->tail->prev;
-        list->size--;  
+        list->tail = list->tail->prev;       
     } else
     {     
-       list->head = list->tail = NULL;
-       list->size--;
+       list->head = list->tail = NULL;       
     }    
+    list->size--;  
 }
 
 void delete(List *list, int index)
