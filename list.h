@@ -30,3 +30,11 @@ void print_list_values(List *list);
 void print_list_indexes(List *list); 
 
 void print_list_addr(List *list); 
+
+void delete(List *list, int index);
+
+void set_value(List* list, int index, int value);
+
+List* reverse_list(List* list);
+
+void clear(List* list);
