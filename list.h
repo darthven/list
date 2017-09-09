@@ -38,3 +38,7 @@ void set_value(List* list, int index, int value);
 List* reverse_list(List* list);
 
 void clear(List* list);
+
+List* map(List* list, int (*function) (int, int, Node**));
+
+int reduce(List* list, int (*function) (int, int, int, Node**));

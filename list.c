@@ -276,3 +276,31 @@ void print_list_addr(List *list)
         printf("[]\n");
     }  
 }
+
+List* map(List* list, int (*function) (int, int, Node**))
+{
+    List* new_list = init_list(list->size);
+    if(list->size > 0) {        
+        Node *it = list->head;       
+        do
+        {
+            add(new_list, function(it->value, it->index, list->addr));
+            it = it->next;
+        } while(it != NULL);
+    }   
+    return new_list;
+}
+
+int reduce(List* list, int (*function) (int, int, int, Node**)) {
+    int result = 0;
+    if(list->size > 0) {        
+        Node *it = list->head;       
+        do
+        {
+            result = function(result, it->value, it->index, list->addr);           
+            it = it->next;
+        } while(it != NULL);
+    }   
+    return result;
+}
+
