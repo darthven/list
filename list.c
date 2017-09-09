@@ -36,6 +36,19 @@ Node* get_node(List *list, int index) {
     return list->addr[index];
 } 
 
+int get_index(List *list, int value) {
+    if(list->size > 0) {
+        Node *it = list->head;
+        do {
+            if(it->value == value) {
+                return it->index;
+            }
+            it = it->next;
+        } while(it != NULL);
+    }
+    return -1;
+}
+
 int get_value(List *list, int index) {    
     return get_node(list, index)->value;
 }   
@@ -248,3 +261,15 @@ int reduce(List *list, int (*function) (int, int, int, Node**)) {
     return result;
 }
 
+unsigned int contains(List *list, int value) {
+    if(list->size > 0) {
+        Node *it = list->head;
+        do {
+            if(it->value == value) {
+                return 1;
+            }
+            it = it->next;
+        } while(it != NULL);
+    }
+    return 0;
+}

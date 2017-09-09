@@ -21,6 +21,8 @@ void add(List *list, int value);
 
 int get_value(List *list, int index); 
 
+int get_index(List *list, int value);
+
 void insert(List *list, int value, int index); 
 
 void print_list_values(List *list); 
@@ -40,3 +42,5 @@ void clear(List *list);
 List* map(List *list, int (*function) (int, int, Node **));
 
 int reduce(List *list, int (*function) (int, int, int, Node **));
+
+unsigned int contains(List *list, int value);

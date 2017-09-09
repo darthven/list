@@ -18,7 +18,6 @@ int main() {
 
     printf("After Size: %d\n", list->size);
     
-
     print_list_values(list);
     print_list_indexes(list);
     print_list_addr(list);
@@ -49,6 +48,12 @@ int main() {
     print_list_values(map_list);
     print_list_indexes(map_list);
     print_list_addr(map_list);
+
+    printf("CONTAINS value 255: %d\n", contains(map_list, 255));
+    printf("CONTAINS value 25: %d\n", contains(map_list, 25));
+    printf("INDEX OF 166: %d\n", get_index(map_list, 166));
+    printf("INDEX OF 16: %d\n", get_index(map_list, 16));
+
 
     printf("REDUCE\n");
     int result = reduce(reversed, reducer);
