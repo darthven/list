@@ -2,7 +2,7 @@
 
 List* init_list(int size) {
     List *list = malloc(size * sizeof(Node));
-    Node** addr = malloc(size * sizeof(Node*));
+    Node **addr = malloc(size * sizeof(Node*));
     list->size = 0;
     list->head = NULL;
     list->tail = NULL;
@@ -40,8 +40,8 @@ int get_value(List *list, int index) {
     return get_node(list, index)->value;
 }   
 
-void insert_head(List* list, Node* node) {    
-    Node** new_addr = malloc((list->size + 1) * sizeof(Node*));    
+void insert_head(List *list, Node *node) {    
+    Node **new_addr = malloc((list->size + 1) * sizeof(Node*));    
     new_addr[0] = node;
     Node *it = list->head;
     do {   
@@ -57,8 +57,8 @@ void insert_head(List* list, Node* node) {
     list->size++;
 }
 
-void insert_inside(List* list, Node* node, int index) {   
-    Node** new_addr = malloc((list->size + 1) * sizeof(Node*));        
+void insert_inside(List *list, Node *node, int index) {   
+    Node **new_addr = malloc((list->size + 1) * sizeof(Node*));        
     //Update element before inserted element
     Node *it1 = list->head;
     do {           
@@ -116,8 +116,8 @@ void delete_head(List *list) {
 }
 
 void delete_inside(List *list, int index) {   
-    Node* prev = get_node(list, index - 1);
-    Node* next = get_node(list, index + 1);
+    Node *prev = get_node(list, index - 1);
+    Node *next = get_node(list, index + 1);
     prev->next = next;
     next->prev = prev;
     Node *it = next;    
@@ -150,13 +150,13 @@ void delete(List *list, int index) {
     }    
 }
 
-void set_value(List* list, int index, int value) {
+void set_value(List *list, int index, int value) {
     list->addr[index]->value = value;
 }
 
-List* reverse_list(List* list) {
-    List* reversed = init_list(list->size);
-    Node* it = list->tail;
+List* reverse_list(List *list) {
+    List *reversed = init_list(list->size);
+    Node *it = list->tail;
     do {
       add(reversed, it->value);  
       it = it->prev;  
@@ -164,7 +164,7 @@ List* reverse_list(List* list) {
     return reversed;
 }
 
-void clear(List* list) {    
+void clear(List *list) {    
     do {
         delete_head(list);            
     } while(list->size > 0);
@@ -224,8 +224,8 @@ void print_list_addr(List *list) {
     }  
 }
 
-List* map(List* list, int (*function) (int, int, Node**)) {
-    List* new_list = init_list(list->size);
+List* map(List *list, int (*function) (int, int, Node**)) {
+    List *new_list = init_list(list->size);
     if(list->size > 0) {        
         Node *it = list->head;       
         do {
@@ -236,7 +236,7 @@ List* map(List* list, int (*function) (int, int, Node**)) {
     return new_list;
 }
 
-int reduce(List* list, int (*function) (int, int, int, Node**)) {
+int reduce(List *list, int (*function) (int, int, int, Node**)) {
     int result = 0;
     if(list->size > 0) {        
         Node *it = list->head;       
