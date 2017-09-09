@@ -3,8 +3,7 @@
 int sqr(int, int index, Node** array_of_nodes);
 int reducer(int, int, int, Node**);
 
-int main()
-{
+int main() {
     List *list = init_list(10);
     printf("Before Size: %d\n", list->size);
 
@@ -57,12 +56,10 @@ int main()
     return 0;
 }
 
-int sqr(int value, int index, Node** array_of_nodes)
-{
+int sqr(int value, int index, Node** array_of_nodes) {
     return value * value;
 }
 
-int reducer(int prev_value, int next_value, int index, Node** array_of_nodes)
-{
+int reducer(int prev_value, int next_value, int index, Node** array_of_nodes) {
     return prev_value + next_value;
 }

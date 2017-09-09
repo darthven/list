@@ -1,16 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef struct NodeDefinition 
-{
+typedef struct NodeDefinition {
     int value;
     struct NodeDefinition* next;
     struct NodeDefinition* prev;
     int index;
 } Node;
 
-typedef struct ListDefinition 
-{    
+typedef struct ListDefinition {    
     int size;
     Node* head;
     Node* tail; 
