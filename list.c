@@ -77,22 +77,17 @@ Node* peek_node(List *list) {
     return first_node(list);
 }
 
-Node* poll_node(List *list) {
-    Node *node = first_node(list);
-    delete_head(list);
-    return node;    
-}
-
 Node* pop_node(List *list) {
-    return poll_node(list);
+    Node *node = first_node(list);
+    if(node != NULL) {
+        delete_head(list);
+        return node;   
+    }
+    return NULL;
 }
 
 int peek(List *list) {
     return peek_node(list)->value;
-}
-
-int poll(List *list) {
-    return poll_node(list)->value;
 }
 
 int pop(List *list) {

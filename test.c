@@ -105,8 +105,6 @@ int main() {
     print_list_info(cloned5);    
     printf("Peek value %d\n", peek(cloned5));
     print_list_info(cloned5);    
-    printf("Poll value %d\n", poll(cloned5));
-    print_list_info(cloned5);  
     printf("Pop value %d\n", pop(cloned5));
     print_list_info(cloned5);  
     printf("Push value %d\n", 123);
