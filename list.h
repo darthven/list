@@ -5,19 +5,22 @@ typedef struct NodeDefinition {
     int value;
     struct NodeDefinition *next;
     struct NodeDefinition *prev;
-    int index;
+    unsigned int index;
 } Node;
 
 typedef struct ListDefinition {    
-    int size;
+    unsigned int size;
+    unsigned int capacity;
     Node *head;
     Node *tail; 
     Node **addr;   
 } List;
 
-List* init_list(int size);
+List* init_list(unsigned int capacity);
 
-int size(List *list);
+unsigned int size(List *list);
+
+void change_capacity(List *list, unsigned int new_capacity);
 
 Node* first_node(List *list);
 
@@ -35,43 +38,55 @@ Node* peek_node(List *list);
 
 Node* poll_node(List *list); 
 
+Node* pop_node(List *list);
+
+int peek(List *list);
+
+int poll(List *list);
+
+int pop(List *list);
+
+void push(List* list, int value);
+
 unsigned int is_empty(List *list);
 
 void add(List *list, int value); 
 
 void add_list(List *dest_list, List *src_list);
 
-int get_value(List *list, int index); 
+int get_value(List *list, unsigned int index); 
 
 int get_index(List *list, int value);
 
-void insert(List *list, int value, int index); 
+void insert(List *list, int value, unsigned int index); 
 
 void print_list_values(List *list); 
 
 void print_list_indexes(List *list); 
 
-void print_list_addr(List *list); 
+void print_list_addr(List *list);
+
+void print_list_info(List *list);
 
 void delete_head(List *list);
 
-void delete(List *list, int index);
+void delete(List *list, unsigned int index);
 
-void delete_by_predicate(List *list, unsigned int (*function) (int, int, Node**));
+void delete_by_predicate(List *list, unsigned int (*function) (int, unsigned int, Node**));
 
-void delete_range(List *list, int from_index, int to_index);
+void delete_range(List *list, unsigned int from_index, unsigned int to_index);
 
-void set_value(List *list, int index, int value);
+void set_value(List *list, unsigned int index, int value);
 
 List* reverse_list(List *list);
 
 void clear(List *list);
 
-void for_each(List* list, void (*function) (int, int, Node**));
+void for_each(List* list, void (*function) (int, unsigned int, Node**));
 
-List* map(List *list, int (*function) (int, int, Node **));
+List* map(List *list, int (*function) (int, unsigned int, Node **));
 
-int reduce(List *list, int (*function) (int, int, int, Node **));
+int reduce(List *list, int (*function) (int, int, unsigned int, Node **));
 
 unsigned int contains(List *list, int value);
 

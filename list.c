@@ -1,12 +1,26 @@
 #include "list.h"
 
-List* init_list(int size) {
-    List *list = malloc(size * sizeof(Node));
-    Node **addr = malloc(size * sizeof(Node*));
+List* init_list(unsigned int capacity) {
+    List *list = malloc(capacity * sizeof(Node));
+    Node **addr = malloc(capacity * sizeof(Node*));
     list->size = 0;
+    list->capacity = capacity;
     list->head = NULL;
     list->tail = NULL;
     list->addr = addr;    
+}
+
+void change_capacity(List *list, unsigned int new_capacity) {
+    if(new_capacity < list->size) {
+        Node *it = list->tail;
+        do {
+            delete(list, it->index);
+            it = it->prev;
+        } while(it->index != new_capacity - 1);
+    } else if(new_capacity > list->size) {
+        list->capacity = new_capacity;
+        realloc(list->addr, (list->capacity * sizeof(Node*)));
+    }
 }
 
 void add_node(List *list, Node *node) {
@@ -26,6 +40,9 @@ void add_node(List *list, Node *node) {
         list->tail = node;            
     }
     list->size++;
+    if(list->size > list->capacity) {
+        change_capacity(list, list->capacity * 2);     
+    }  
     list->addr[node->index] = node;
 }
 
@@ -44,44 +61,40 @@ void add_list(List *dest_list, List *src_list) {
     } while(it != NULL);
 }
 
-//TODO need test
 void add_first(List *list, int value) {
     insert(list, value, 0);
 }
 
-//TODO need test
 void add_last(List *list, int value) {
-    insert(list, value, size(list) - 1);
+    insert(list, value, size(list));
 }
 
-//TODO need test
+void push(List* list, int value) {
+    add_first(list, value);
+}
+
 Node* peek_node(List *list) {
     return first_node(list);
 }
 
-//TODO need test
 Node* poll_node(List *list) {
     Node *node = first_node(list);
     delete_head(list);
     return node;    
 }
 
-//TODO need test
 Node* pop_node(List *list) {
     return poll_node(list);
 }
 
-//TODO need test
 int peek(List *list) {
     return peek_node(list)->value;
 }
 
-//TODO need test
 int poll(List *list) {
     return poll_node(list)->value;
 }
 
-//TODO need test
 int pop(List *list) {
     return pop_node(list)->value;
 }
@@ -103,27 +116,23 @@ int get_index(List *list, int value) {
     return -1;
 }
 
-//TODO need test
 Node* first_node(List *list) {
     return list->head;
 }
 
-//TODO need test
 Node* last_node(List *list) {
     return list->tail;
 }
 
-//TODO need test
 int first(List *list) {
     return first_node(list)->value;
 }
 
-//TODO need test
 int last(List *list) {
     return last_node(list)->value;
 }
 
-int get_value(List *list, int index) {    
+int get_value(List *list, unsigned int index) {    
     return get_node(list, index)->value;
 }   
 
@@ -144,7 +153,7 @@ void insert_head(List *list, Node *node) {
     list->size++;
 }
 
-void insert_inside(List *list, Node *node, int index) {   
+void insert_inside(List *list, Node *node, unsigned int index) {   
     Node **new_addr = malloc((list->size + 1) * sizeof(Node*));        
     //Update element before inserted element
     Node *it1 = list->head;
@@ -172,7 +181,7 @@ void insert_inside(List *list, Node *node, int index) {
     list->size++;
 }
 
-void insert(List *list, int value, int index) {
+void insert(List *list, int value, unsigned int index) {
     Node *node = malloc(sizeof(Node));
     node->value = value; 
     node->index = index;
@@ -201,7 +210,7 @@ void delete_head(List *list) {
    list->size--;
 }
 
-void delete_inside(List *list, int index) {   
+void delete_inside(List *list, unsigned int index) {   
     Node *prev = get_node(list, index - 1);
     Node *next = get_node(list, index + 1);
     prev->next = next;
@@ -226,7 +235,7 @@ void delete_tail(List *list) {
     list->size--;  
 }
 
-void delete(List *list, int index) {   
+void delete(List *list, unsigned int index) {   
     if(index == 0) {
         delete_head(list);
     } else if(index == list->tail->index) {
@@ -236,7 +245,7 @@ void delete(List *list, int index) {
     }    
 }
 
-void delete_by_predicate(List *list, unsigned int (*function) (int, int, Node**)) {
+void delete_by_predicate(List *list, unsigned int (*function) (int, unsigned int, Node**)) {
     if(list->size > 0) {        
         Node *it = list->head;       
         do {
@@ -248,7 +257,7 @@ void delete_by_predicate(List *list, unsigned int (*function) (int, int, Node**)
     }   
 }
 
-void delete_range(List *list, int from_index, int to_index) {
+void delete_range(List *list, unsigned int from_index, unsigned int to_index) {
     if(list->size > 0) {        
         Node *it = get_node(list, from_index);  
         Node *last_node = get_node(list, to_index); 
@@ -260,7 +269,7 @@ void delete_range(List *list, int from_index, int to_index) {
     }   
 }
 
-void set_value(List *list, int index, int value) {
+void set_value(List *list, unsigned int index, int value) {
     list->addr[index]->value = value;
 }
 
@@ -318,7 +327,7 @@ void print_list_indexes(List *list) {
 
 void print_list_addr(List *list) {
     if(list->size > 0) {
-        int index = 0;
+        unsigned int index = 0;
         printf("[");    
         do {
             if(index == list->size - 1) {
@@ -334,7 +343,13 @@ void print_list_addr(List *list) {
     }  
 }
 
-void for_each(List* list, void (*function) (int, int, Node**)) {
+void print_list_info(List *list) {
+    print_list_values(list);
+    print_list_indexes(list);
+    print_list_addr(list);
+}
+
+void for_each(List* list, void (*function) (int, unsigned int, Node**)) {
     if(list->size > 0) {        
         Node *it = list->head;       
         do {
@@ -344,7 +359,7 @@ void for_each(List* list, void (*function) (int, int, Node**)) {
     }   
 }
 
-List* map(List *list, int (*function) (int, int, Node**)) {
+List* map(List *list, int (*function) (int, unsigned int, Node**)) {
     List *new_list = init_list(list->size);
     if(list->size > 0) {        
         Node *it = list->head;       
@@ -356,7 +371,7 @@ List* map(List *list, int (*function) (int, int, Node**)) {
     return new_list;
 }
 
-int reduce(List *list, int (*function) (int, int, int, Node**)) {
+int reduce(List *list, int (*function) (int, int, unsigned int, Node**)) {
     int result = 0;
     if(list->size > 0) {        
         Node *it = list->head;       
@@ -385,7 +400,7 @@ unsigned int is_empty(List *list) {
     return list->size == 0;
 }
 
-int size(List *list) {
+unsigned int size(List *list) {
     return list->size;
 }
 
