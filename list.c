@@ -9,10 +9,7 @@ List* init_list(int size) {
     list->addr = addr;    
 }
 
-void add(List *list, int value) {
-    Node *node = malloc(sizeof(Node));
-    node->value = value;    
-    node->next = NULL;
+void add_node(List *list, Node *node) {
     if(list->head == NULL) {        
         node->index = 0;
         node->prev = NULL;        
@@ -32,6 +29,63 @@ void add(List *list, int value) {
     list->addr[node->index] = node;
 }
 
+void add(List *list, int value) {
+    Node *node = malloc(sizeof(Node));
+    node->value = value;    
+    node->next = NULL;
+    add_node(list, node);   
+}
+
+void add_list(List *dest_list, List *src_list) {    
+    Node *it = src_list->head;
+    do {
+        add_node(dest_list, it);
+        it = it->next;
+    } while(it != NULL);
+}
+
+//TODO need test
+void add_first(List *list, int value) {
+    insert(list, value, 0);
+}
+
+//TODO need test
+void add_last(List *list, int value) {
+    insert(list, value, size(list) - 1);
+}
+
+//TODO need test
+Node* peek_node(List *list) {
+    return first_node(list);
+}
+
+//TODO need test
+Node* poll_node(List *list) {
+    Node *node = first_node(list);
+    delete_head(list);
+    return node;    
+}
+
+//TODO need test
+Node* pop_node(List *list) {
+    return poll_node(list);
+}
+
+//TODO need test
+int peek(List *list) {
+    return peek_node(list)->value;
+}
+
+//TODO need test
+int poll(List *list) {
+    return poll_node(list)->value;
+}
+
+//TODO need test
+int pop(List *list) {
+    return pop_node(list)->value;
+}
+
 Node* get_node(List *list, int index) {    
     return list->addr[index];
 } 
@@ -47,6 +101,26 @@ int get_index(List *list, int value) {
         } while(it != NULL);
     }
     return -1;
+}
+
+//TODO need test
+Node* first_node(List *list) {
+    return list->head;
+}
+
+//TODO need test
+Node* last_node(List *list) {
+    return list->tail;
+}
+
+//TODO need test
+int first(List *list) {
+    return first_node(list)->value;
+}
+
+//TODO need test
+int last(List *list) {
+    return last_node(list)->value;
 }
 
 int get_value(List *list, int index) {    

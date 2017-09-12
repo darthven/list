@@ -19,9 +19,27 @@ List* init_list(int size);
 
 int size(List *list);
 
+Node* first_node(List *list);
+
+Node* last_node(List *list);
+
+int first(List *list);
+
+int last(List *list); 
+
+void add_first(List *list, int value);
+
+void add_last(List *list, int value);
+
+Node* peek_node(List *list);
+
+Node* poll_node(List *list); 
+
 unsigned int is_empty(List *list);
 
 void add(List *list, int value); 
+
+void add_list(List *dest_list, List *src_list);
 
 int get_value(List *list, int index); 
 
@@ -34,6 +52,8 @@ void print_list_values(List *list);
 void print_list_indexes(List *list); 
 
 void print_list_addr(List *list); 
+
+void delete_head(List *list);
 
 void delete(List *list, int index);
 

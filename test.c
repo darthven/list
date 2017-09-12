@@ -78,10 +78,11 @@ int main() {
     print_list_addr(cloned);
 
     printf("DELETE BY PREDICATE\n");
-    delete_by_predicate(reversed, predicate);
-    print_list_values(reversed);
-    print_list_indexes(reversed);
-    print_list_addr(reversed);
+    List *cloned2 = clone(reversed);
+    delete_by_predicate(cloned2, predicate);
+    print_list_values(cloned2);
+    print_list_indexes(cloned2);
+    print_list_addr(cloned2);
 
     printf("DELETE BY RANGE\n");
     printf("BEFORE:\n");
@@ -99,6 +100,24 @@ int main() {
     for(int i = 0; i < size(cloned); i++) {
         printf("%d ", int_array[i]);
     }   
+
+    printf("ADD LIST\n");
+    printf("DESTINATION LIST:\n");
+    List *cloned3 = clone(reversed);
+    print_list_values(cloned3);
+    print_list_indexes(cloned3);
+    print_list_addr(cloned3);
+    printf("SOURCE LIST:\n");
+    List *cloned4 = clone(reverse_list(reversed));
+    print_list_values(cloned4);
+    print_list_indexes(cloned4);
+    print_list_addr(cloned4);
+    printf("RESULT LIST:\n");
+    add_list(cloned3, cloned4);
+    print_list_values(cloned3);
+    print_list_indexes(cloned3);
+    print_list_addr(cloned3);
+
     return 0;
 }
 
@@ -109,11 +128,9 @@ unsigned int predicate(int value, int index, Node **array_of_nodes) {
     return 0;
 }
 
-
 void print_values(int value, int index, Node **array_of_nodes) {
     printf("Element[%d] = %d\n", index, value);
 }
- 
 
 int sqr(int value, int index, Node **array_of_nodes) {
     return value * value;
