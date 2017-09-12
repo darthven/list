@@ -94,7 +94,6 @@ void insert_inside(List *list, Node *node, int index) {
         new_addr[it2->index] = it2;
         it2 = it2->next;
     } while(it2 != NULL);    
-  
     list->addr = new_addr;
     list->size++;
 }
@@ -163,7 +162,6 @@ void delete(List *list, int index) {
     }    
 }
 
-//TODO Need test
 void delete_by_predicate(List *list, unsigned int (*function) (int, int, Node**)) {
     if(list->size > 0) {        
         Node *it = list->head;       
@@ -176,14 +174,15 @@ void delete_by_predicate(List *list, unsigned int (*function) (int, int, Node**)
     }   
 }
 
-//TODO Need test
 void delete_range(List *list, int from_index, int to_index) {
     if(list->size > 0) {        
-        Node *it = get_node(list, from_index);   
-        do {
+        Node *it = get_node(list, from_index);  
+        Node *last_node = get_node(list, to_index); 
+        int counter = 0;
+        do {            
             delete(list, it->index);      
-            it = it->next;
-        } while(it->index >= from_index && it->index < to_index);
+            it = it->next;               
+        } while(it != last_node->next);
     }   
 }
 
@@ -261,7 +260,6 @@ void print_list_addr(List *list) {
     }  
 }
 
-//TODO Need test
 void for_each(List* list, void (*function) (int, int, Node**)) {
     if(list->size > 0) {        
         Node *it = list->head;       
@@ -309,17 +307,14 @@ unsigned int contains(List *list, int value) {
     return 0;
 }
 
-//TODO Need test
 unsigned int is_empty(List *list) {
     return list->size == 0;
 }
 
-//TODO Need test
 int size(List *list) {
     return list->size;
 }
 
-//TODO Need test
 int* to_array(List *list) {
     int *array = (int*) malloc(list->size);    
     if(list->size > 0) {
@@ -332,7 +327,6 @@ int* to_array(List *list) {
     return array;
 }
 
-//TODO Need test
 List* clone(List *list) {
     List *cloned_list = init_list(list->size);
     if(list->size > 0) {
